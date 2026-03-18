@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { db } from "@/db";
 import { reservations, restaurants, users } from "@/db/schema";
 import { eq, desc, sql } from "drizzle-orm";

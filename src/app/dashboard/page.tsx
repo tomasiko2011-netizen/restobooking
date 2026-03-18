@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { db } from "@/db";
 import { reservations, restaurants } from "@/db/schema";

@@ -4,6 +4,8 @@ import { reservations, restaurants } from "@/db/schema";
 import { eq, and, sql, count } from "drizzle-orm";
 import { v4 as uuid } from "uuid";
 
+export const dynamic = "force-dynamic";
+
 // POST /api/reservations — create a reservation
 export async function POST(req: NextRequest) {
   const { restaurantId, cityId, date, time, guests, note } = await req.json();

@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { NextRequest, NextResponse } from "next/server";
+import { notifyReservationUpdate } from "@/lib/pusher-server";
 import { db } from "@/db";
 import { reservations, restaurants } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -54,8 +55,8 @@ export async function PATCH(
     phone = r?.phone;
   }
 
-  // TODO: Pusher push event
-  // await pusher.trigger(`reservation-${id}`, 'status-update', { status, phone });
+  // Pusher push event
+  await notifyReservationUpdate(reservation.restaurantId, { reservationId: id, status, phone });
 
   return NextResponse.json({
     ok: true,

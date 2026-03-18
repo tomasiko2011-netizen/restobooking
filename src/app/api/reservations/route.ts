@@ -3,6 +3,7 @@ import { db } from "@/db";
 import { reservations, restaurants } from "@/db/schema";
 import { eq, and, sql, count } from "drizzle-orm";
 import { v4 as uuid } from "uuid";
+import { notifyNewReservation } from "@/lib/pusher-server";
 
 export const dynamic = "force-dynamic";
 
@@ -57,7 +58,8 @@ export async function POST(req: NextRequest) {
     note: note || null,
   });
 
-  // TODO: Pusher notification to restaurant
+  // Pusher notification to restaurant
+  await notifyNewReservation(restaurantId, { reservationId: id, date, time, guests });
 
   return NextResponse.json({
     ok: true,

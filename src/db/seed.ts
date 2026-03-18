@@ -1,0 +1,130 @@
+import { createClient } from "@libsql/client";
+import { drizzle } from "drizzle-orm/libsql";
+import { v4 as uuid } from "uuid";
+import * as schema from "./schema";
+
+const client = createClient({
+  url: process.env.TURSO_URL || "file:local.db",
+  authToken: process.env.TURSO_AUTH_TOKEN,
+});
+const db = drizzle(client, { schema });
+
+async function seed() {
+  console.log("Seeding database...");
+
+  // === CITIES ===
+  const cityData = [
+    { id: uuid(), name: "Алматы", slug: "almaty", lat: 43.2380, lng: 76.9450 },
+    { id: uuid(), name: "Астана", slug: "astana", lat: 51.1605, lng: 71.4704 },
+    { id: uuid(), name: "Шымкент", slug: "shymkent", lat: 42.3154, lng: 69.5867 },
+    { id: uuid(), name: "Тараз", slug: "taraz", lat: 42.9000, lng: 71.3667 },
+    { id: uuid(), name: "Караганда", slug: "karaganda", lat: 49.8047, lng: 73.1094 },
+    { id: uuid(), name: "Актобе", slug: "aktobe", lat: 50.2839, lng: 57.1670 },
+    { id: uuid(), name: "Павлодар", slug: "pavlodar", lat: 52.2873, lng: 76.9674 },
+    { id: uuid(), name: "Семей", slug: "semey", lat: 50.4111, lng: 80.2275 },
+    { id: uuid(), name: "Атырау", slug: "atyrau", lat: 47.1167, lng: 51.8833 },
+    { id: uuid(), name: "Костанай", slug: "kostanay", lat: 53.2198, lng: 63.6354 },
+  ];
+
+  for (const city of cityData) {
+    await db.insert(schema.cities).values(city).onConflictDoNothing();
+  }
+  console.log(`✓ ${cityData.length} cities`);
+
+  const cityMap: Record<string, string> = {};
+  for (const c of cityData) cityMap[c.slug] = c.id;
+
+  // === ADMIN USER ===
+  const adminId = uuid();
+  await db.insert(schema.users).values({
+    id: adminId, email: "admin@restobooking.kz", name: "Admin",
+    role: "admin", cityId: cityMap.almaty,
+  }).onConflictDoNothing();
+
+  // === RESTAURANTS ===
+  const restaurantData = [
+    // АЛМАТЫ
+    { name: "Baharat", slug: "baharat", cuisine: "Восточная, Узбекская", address: "ул. Шевченко 94", lat: 43.24539, lng: 76.935237, phone: "+7 707 535 9436", city: "almaty", price: 3, cap: 30, deposit: 3000 },
+    { name: "Shafran", slug: "shafran", cuisine: "Узбекская, Казахская", address: "ул. Толе би 207", lat: 43.2535, lng: 76.9221, phone: "+7 700 244 4444", city: "almaty", price: 3, cap: 40, deposit: 5000 },
+    { name: "Кишлак", slug: "kishlak", cuisine: "Восточная, Шашлык", address: "пр. Сейфуллина 540а", lat: 43.24076, lng: 76.934847, phone: "+7 747 679 5979", city: "almaty", price: 3, cap: 50, deposit: 5000 },
+    { name: "Саксаул", slug: "saksaul", cuisine: "Казахская, Европейская", address: "ул. Толе би 128", lat: 43.252378, lng: 76.916045, phone: "+7 707 128 7128", city: "almaty", price: 4, cap: 35, deposit: 10000 },
+    { name: "Naryn", slug: "naryn", cuisine: "Казахская, Халяль", address: "ул. Толе би 273/4", lat: 43.2578, lng: 76.9294, phone: "+7 708 400 4014", city: "almaty", price: 2, cap: 25, deposit: 2000 },
+    { name: "Rumi Плов центр", slug: "rumi-plov", cuisine: "Узбекская, Плов", address: "пр. Абылай хана 92а", lat: 43.2548, lng: 76.9492, phone: "+7 700 800 9292", city: "almaty", price: 2, cap: 30, deposit: 0 },
+    { name: "Lanzhou", slug: "lanzhou-almaty", cuisine: "Китайская, Лагман", address: "пр. Жибек Жолы 65а", lat: 43.262435, lng: 76.947737, phone: "+7 700 161 1161", city: "almaty", price: 2, cap: 20, deposit: 0 },
+    { name: "Manhattan лагманхана", slug: "manhattan", cuisine: "Уйгурская, Лагман", address: "ул. Прокофьева 165", lat: 43.242192, lng: 76.875559, phone: "+7 777 302 9596", city: "almaty", price: 1, cap: 15, deposit: 0 },
+    { name: "Имбирь", slug: "imbir", cuisine: "Восточная, Домашняя", address: "ул. Утеген батыра 5", lat: 43.250183, lng: 76.852728, phone: "+7 747 942 9351", city: "almaty", price: 2, cap: 25, deposit: 0 },
+    { name: "Bukhara.kz", slug: "bukhara", cuisine: "Бухарская, Узбекская", address: "мкр. Сайран 2/2", lat: 43.232436, lng: 76.869422, phone: "+7 700 812 7070", city: "almaty", price: 2, cap: 20, deposit: 2000 },
+
+    // АСТАНА
+    { name: "Узбечка №1", slug: "uzbekchka", cuisine: "Узбекская, Плов", address: "ул. Алихан Бокейхан 10", lat: 51.114461, lng: 71.438914, phone: "+7 701 186 6868", city: "astana", price: 2, cap: 30, deposit: 3000 },
+    { name: "KaRima центр плова", slug: "karima", cuisine: "Узбекская, Плов", address: "ул. Достык 12/1", lat: 51.125693, lng: 71.42708, phone: "+7 700 883 0000", city: "astana", price: 2, cap: 25, deposit: 0 },
+    { name: "На Востоке, на востоке", slug: "na-vostoke", cuisine: "Узбекская, Восточная", address: "пр. Туран 44/2", lat: 51.112922, lng: 71.403144, phone: "+7 700 400 4402", city: "astana", price: 3, cap: 40, deposit: 5000 },
+    { name: "Kutaisi", slug: "kutaisi", cuisine: "Грузинская", address: "пр. Момышулы 13", lat: 51.137939, lng: 71.469827, phone: "+7 700 130 1300", city: "astana", price: 3, cap: 30, deposit: 3000 },
+    { name: "Lanzhou", slug: "lanzhou-astana", cuisine: "Китайская, Лагман", address: "ул. Сарайшык 5", lat: 51.135651, lng: 71.423635, phone: "+7 700 161 1161", city: "astana", price: 2, cap: 20, deposit: 0 },
+
+    // ШЫМКЕНТ
+    { name: "Ясин", slug: "yasin", cuisine: "Восточная, Самса", address: "пр. Назарбаева 53а", lat: 42.362843, lng: 69.635688, phone: "+7 700 530 5300", city: "shymkent", price: 2, cap: 30, deposit: 2000 },
+    { name: "Мизам", slug: "mizam", cuisine: "Узбекская, Лагман", address: "Тамерлановское шоссе 214Б", lat: 42.3285, lng: 69.6501, phone: "+7 700 214 2140", city: "shymkent", price: 1, cap: 25, deposit: 0 },
+    { name: "Aurum Family", slug: "aurum", cuisine: "Восточная, Европейская", address: "пр. Тауке хана 93а", lat: 42.313855, lng: 69.618399, phone: "+7 702 088 8008", city: "shymkent", price: 3, cap: 40, deposit: 5000 },
+
+    // ТАРАЗ
+    { name: "Жеті тандыр", slug: "jeti-tandyr", cuisine: "Восточная, Тандыр", address: "ул. Сулейменова 26в", lat: 42.8875, lng: 71.3586, phone: "+7 778 970 7007", city: "taraz", price: 2, cap: 25, deposit: 0 },
+    { name: "AJWA чайхана", slug: "ajwa", cuisine: "Восточная, Чайхана", address: "пр. Абая 22а", lat: 42.912449, lng: 71.397221, phone: "+7 776 377 3777", city: "taraz", price: 2, cap: 30, deposit: 2000 },
+    { name: "Jamm&Bull's", slug: "jamm-bulls", cuisine: "Микс, Шашлык", address: "ул. Ташкентская 195а", lat: 42.875117, lng: 71.368926, phone: "+7 771 099 9599", city: "taraz", price: 3, cap: 35, deposit: 3000 },
+
+    // КАРАГАНДА
+    { name: "Viva La Plov", slug: "viva-la-plov", cuisine: "Узбекская, Плов", address: "ул. Жангозина 11", lat: 49.820187, lng: 73.092664, phone: "+7 700 110 1100", city: "karaganda", price: 3, cap: 30, deposit: 3000 },
+    { name: "Жаровня", slug: "zharovnya", cuisine: "Шашлык, Гриль", address: "ул. Рахимова 138/2", lat: 49.7954, lng: 73.1152, phone: "+7 775 000 0444", city: "karaganda", price: 2, cap: 25, deposit: 0 },
+  ];
+
+  const restaurantIds: string[] = [];
+  for (const r of restaurantData) {
+    const id = uuid();
+    restaurantIds.push(id);
+    await db.insert(schema.restaurants).values({
+      id,
+      cityId: cityMap[r.city],
+      name: r.name,
+      slug: r.slug,
+      cuisine: r.cuisine,
+      address: r.address,
+      lat: r.lat,
+      lng: r.lng,
+      phone: r.phone,
+      priceRange: r.price,
+      capacityPerSlot: r.cap,
+      depositAmount: r.deposit,
+      depositRequired: r.deposit > 0,
+      rating: 4.3 + Math.random() * 0.7,
+    }).onConflictDoNothing();
+  }
+  console.log(`✓ ${restaurantData.length} restaurants`);
+
+  // === PRICING RULES ===
+  for (let i = 0; i < restaurantIds.length; i++) {
+    // Peak: Fri-Sat evening 1.3x
+    await db.insert(schema.pricingRules).values({
+      id: uuid(), restaurantId: restaurantIds[i],
+      dayOfWeek: 5, timeStart: "19:00", timeEnd: "22:00",
+      multiplier: 1.3, label: "Пятница вечер",
+    });
+    await db.insert(schema.pricingRules).values({
+      id: uuid(), restaurantId: restaurantIds[i],
+      dayOfWeek: 6, timeStart: "19:00", timeEnd: "22:00",
+      multiplier: 1.5, label: "Суббота вечер",
+    });
+    // Off-peak: weekday lunch discount
+    await db.insert(schema.pricingRules).values({
+      id: uuid(), restaurantId: restaurantIds[i],
+      dayOfWeek: null, timeStart: "12:00", timeEnd: "15:00",
+      multiplier: 0.8, label: "Бизнес-ланч -20%",
+    });
+  }
+  console.log(`✓ ${restaurantIds.length * 3} pricing rules`);
+
+  console.log("\n✅ Seed complete!");
+  console.log(`   ${cityData.length} cities, ${restaurantData.length} restaurants`);
+  process.exit(0);
+}
+
+seed().catch((e) => { console.error(e); process.exit(1); });

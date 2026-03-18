@@ -54,6 +54,13 @@ async function seed() {
     { name: "Manhattan лагманхана", slug: "manhattan", cuisine: "Уйгурская, Лагман", address: "ул. Прокофьева 165", lat: 43.242192, lng: 76.875559, phone: "+7 777 302 9596", city: "almaty", price: 1, cap: 15, deposit: 0 },
     { name: "Имбирь", slug: "imbir", cuisine: "Восточная, Домашняя", address: "ул. Утеген батыра 5", lat: 43.250183, lng: 76.852728, phone: "+7 747 942 9351", city: "almaty", price: 2, cap: 25, deposit: 0 },
     { name: "Bukhara.kz", slug: "bukhara", cuisine: "Бухарская, Узбекская", address: "мкр. Сайран 2/2", lat: 43.232436, lng: 76.869422, phone: "+7 700 812 7070", city: "almaty", price: 2, cap: 20, deposit: 2000 },
+    // АЛМАТЫ — 2GIS
+    { name: "Ziyafet Steak House", slug: "ziyafet", cuisine: "Барбекю, Стейки", address: "ул. Желтоксан 172", lat: 43.243, lng: 76.9285, phone: "+7 700 172 1720", city: "almaty", price: 3, cap: 40, deposit: 5000 },
+    { name: "Mahalla", slug: "mahalla", cuisine: "Восточная, Грузинская", address: "ТРЦ ADK, пр. Сатпаева 90", lat: 43.2374, lng: 76.89, phone: "+7 707 831 0033", city: "almaty", price: 2, cap: 30, deposit: 3000 },
+    { name: "Alani", slug: "alani", cuisine: "Восточная, Казахская", address: "ул. Луганского 19", lat: 43.231, lng: 76.911, phone: "+7 700 190 1900", city: "almaty", price: 2, cap: 40, deposit: 3000 },
+    { name: "Tal", slug: "tal", cuisine: "Восточная, Европейская", address: "ул. Навои 200 блок 3", lat: 43.2248, lng: 76.876, phone: "+7 700 200 2000", city: "almaty", price: 3, cap: 40, deposit: 4000 },
+    { name: "Parasat", slug: "parasat", cuisine: "Казахская, Банкетная", address: "ул. Жамбыла 154", lat: 43.245878, lng: 76.91687, phone: "+7 708 044 1313", city: "almaty", price: 2, cap: 40, deposit: 3000 },
+    { name: "Shyngys Han", slug: "shyngys-han", cuisine: "Казахская, Банкетная", address: "ул. Нурмакова 25", lat: 43.255802, lng: 76.905485, phone: "+7 705 875 9999", city: "almaty", price: 2, cap: 40, deposit: 3000 },
 
     // АСТАНА
     { name: "Узбечка №1", slug: "uzbekchka", cuisine: "Узбекская, Плов", address: "ул. Алихан Бокейхан 10", lat: 51.114461, lng: 71.438914, phone: "+7 701 186 6868", city: "astana", price: 2, cap: 30, deposit: 3000 },
@@ -61,20 +68,39 @@ async function seed() {
     { name: "На Востоке, на востоке", slug: "na-vostoke", cuisine: "Узбекская, Восточная", address: "пр. Туран 44/2", lat: 51.112922, lng: 71.403144, phone: "+7 700 400 4402", city: "astana", price: 3, cap: 40, deposit: 5000 },
     { name: "Kutaisi", slug: "kutaisi", cuisine: "Грузинская", address: "пр. Момышулы 13", lat: 51.137939, lng: 71.469827, phone: "+7 700 130 1300", city: "astana", price: 3, cap: 30, deposit: 3000 },
     { name: "Lanzhou", slug: "lanzhou-astana", cuisine: "Китайская, Лагман", address: "ул. Сарайшык 5", lat: 51.135651, lng: 71.423635, phone: "+7 700 161 1161", city: "astana", price: 2, cap: 20, deposit: 0 },
+    // АСТАНА — 2GIS
+    { name: "La Mia Piazza", slug: "la-mia-piazza", cuisine: "Итальянская, Европейская", address: "пр. Туран 22/1", lat: 51.128, lng: 71.43, phone: "+7 700 221 2210", city: "astana", price: 3, cap: 40, deposit: 4000 },
+    { name: "The Moon", slug: "the-moon", cuisine: "Паназиатская, Европейская", address: "ул. Акмешит 1 блок 6", lat: 51.156, lng: 71.425, phone: "+7 700 160 1600", city: "astana", price: 3, cap: 30, deposit: 4000 },
+    { name: "Ranch", slug: "ranch", cuisine: "Стейки, Гриль", address: "ул. Динмухамед Конаев 14", lat: 51.173, lng: 71.42, phone: "+7 700 140 1400", city: "astana", price: 3, cap: 40, deposit: 5000 },
+    { name: "Гаухартас", slug: "gauhartas", cuisine: "Казахская, Банкетная", address: "ул. Ермека Серкебаева 11", lat: 51.167842, lng: 71.389026, phone: "+7 776 007 7725", city: "astana", price: 2, cap: 40, deposit: 3000 },
 
     // ШЫМКЕНТ
     { name: "Ясин", slug: "yasin", cuisine: "Восточная, Самса", address: "пр. Назарбаева 53а", lat: 42.362843, lng: 69.635688, phone: "+7 700 530 5300", city: "shymkent", price: 2, cap: 30, deposit: 2000 },
     { name: "Мизам", slug: "mizam", cuisine: "Узбекская, Лагман", address: "Тамерлановское шоссе 214Б", lat: 42.3285, lng: 69.6501, phone: "+7 700 214 2140", city: "shymkent", price: 1, cap: 25, deposit: 0 },
     { name: "Aurum Family", slug: "aurum", cuisine: "Восточная, Европейская", address: "пр. Тауке хана 93а", lat: 42.313855, lng: 69.618399, phone: "+7 702 088 8008", city: "shymkent", price: 3, cap: 40, deposit: 5000 },
+    // ШЫМКЕНТ — 2GIS
+    { name: "Murager", slug: "murager", cuisine: "Европейская, Фьюжн", address: "ул. Елшибек батыра 118", lat: 42.32555, lng: 69.636191, phone: "+7 775 446 5808", city: "shymkent", price: 2, cap: 40, deposit: 3000 },
+    { name: "Vavilon", slug: "vavilon", cuisine: "Многокухонная, Банкетная", address: "ул. Сыперган ата 715", lat: 42.357133, lng: 69.556239, phone: "+7 700 715 7150", city: "shymkent", price: 2, cap: 40, deposit: 3000 },
 
     // ТАРАЗ
     { name: "Жеті тандыр", slug: "jeti-tandyr", cuisine: "Восточная, Тандыр", address: "ул. Сулейменова 26в", lat: 42.8875, lng: 71.3586, phone: "+7 778 970 7007", city: "taraz", price: 2, cap: 25, deposit: 0 },
     { name: "AJWA чайхана", slug: "ajwa", cuisine: "Восточная, Чайхана", address: "пр. Абая 22а", lat: 42.912449, lng: 71.397221, phone: "+7 776 377 3777", city: "taraz", price: 2, cap: 30, deposit: 2000 },
     { name: "Jamm&Bull's", slug: "jamm-bulls", cuisine: "Микс, Шашлык", address: "ул. Ташкентская 195а", lat: 42.875117, lng: 71.368926, phone: "+7 771 099 9599", city: "taraz", price: 3, cap: 35, deposit: 3000 },
+    // ТАРАЗ — 2GIS
+    { name: "AYU", slug: "ayu", cuisine: "Европейская", address: "ул. Каратая Турысова 3а", lat: 42.889, lng: 71.373, phone: "+7 700 030 0300", city: "taraz", price: 2, cap: 25, deposit: 2000 },
+    { name: "Остров Кэма", slug: "ostrov-kema", cuisine: "Многокухонная, Банкетная", address: "ул. Титова 1", lat: 42.882, lng: 71.383, phone: "+7 700 010 0100", city: "taraz", price: 2, cap: 40, deposit: 3000 },
+    { name: "Sakartvelo", slug: "sakartvelo", cuisine: "Грузинская", address: "ул. Сулейменова 16", lat: 42.896, lng: 71.37, phone: "+7 700 160 1600", city: "taraz", price: 2, cap: 25, deposit: 2000 },
+    { name: "Marvarid", slug: "marvarid", cuisine: "Восточная, Многокухонная", address: "ул. Комратова 94", lat: 42.875, lng: 71.39, phone: "+7 700 940 9400", city: "taraz", price: 2, cap: 30, deposit: 2000 },
+    { name: "Astrum", slug: "astrum", cuisine: "Европейская, Рыбный", address: "ул. Тауке хана 15а", lat: 42.887, lng: 71.381, phone: "+7 700 150 1500", city: "taraz", price: 2, cap: 30, deposit: 2000 },
 
     // КАРАГАНДА
     { name: "Viva La Plov", slug: "viva-la-plov", cuisine: "Узбекская, Плов", address: "ул. Жангозина 11", lat: 49.820187, lng: 73.092664, phone: "+7 700 110 1100", city: "karaganda", price: 3, cap: 30, deposit: 3000 },
     { name: "Жаровня", slug: "zharovnya", cuisine: "Шашлык, Гриль", address: "ул. Рахимова 138/2", lat: 49.7954, lng: 73.1152, phone: "+7 775 000 0444", city: "karaganda", price: 2, cap: 25, deposit: 0 },
+    // КАРАГАНДА — 2GIS
+    { name: "Villa Borghese", slug: "villa-borghese", cuisine: "Итальянская, Европейская", address: "Музейный переулок 4", lat: 49.807391, lng: 73.067358, phone: "+7 700 040 0400", city: "karaganda", price: 3, cap: 40, deposit: 5000 },
+    { name: "Da Vinci", slug: "da-vinci", cuisine: "Азиатская, Европейская", address: "пр. Назарбаева 21", lat: 49.805, lng: 73.09, phone: "+7 700 210 2100", city: "karaganda", price: 3, cap: 40, deposit: 5000 },
+    { name: "Lumi", slug: "lumi", cuisine: "Кавказская, Казахская", address: "пр. Нуркена Абдирова 30в", lat: 49.805769, lng: 73.099643, phone: "+7 700 300 3000", city: "karaganda", price: 2, cap: 30, deposit: 3000 },
+    { name: "Gurami", slug: "gurami", cuisine: "Грузинская, Халяль", address: "Arena Park, мкр. Байкена Ашимова 7/1", lat: 49.7926, lng: 73.137, phone: "+7 700 071 0710", city: "karaganda", price: 2, cap: 25, deposit: 2000 },
   ];
 
   const restaurantIds: string[] = [];

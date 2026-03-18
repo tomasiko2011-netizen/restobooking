@@ -1,0 +1,17 @@
+{
+  "name": "RestoBooking — Бронирование ресторанов",
+  "short_name": "RestoBooking",
+  "description": "Забронируйте столик в лучших ресторанах Казахстана",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f97316",
+  "theme_color": "#f97316",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "categories": ["food", "lifestyle"],
+  "lang": "ru",
+  "scope": "/"
+}

@@ -18,8 +18,20 @@ export default async function RestaurantPage({ params }: { params: Promise<{ cit
 
   const priceLabel = (n: number) => "₸".repeat(n);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    name: restaurant.name,
+    address: { "@type": "PostalAddress", streetAddress: restaurant.address, addressLocality: city.name, addressCountry: "KZ" },
+    geo: { "@type": "GeoCoordinates", latitude: restaurant.lat, longitude: restaurant.lng },
+    servesCuisine: restaurant.cuisine,
+    priceRange: "₸".repeat(restaurant.priceRange ?? 2),
+    aggregateRating: { "@type": "AggregateRating", ratingValue: restaurant.rating, bestRating: 5, reviewCount: restaurant.reviewCount || 1 },
+  };
+
   return (
     <div className="min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* Header */}
       <header className="bg-gradient-to-r from-orange-500 to-red-600 text-white">
         <div className="max-w-4xl mx-auto px-4 py-8">

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import Providers from "@/components/Providers";
 import Navbar from "@/components/Navbar";
+import BottomNav from "@/components/BottomNav";
 import "./globals.css";
 
 const geist = Geist({ variable: "--font-geist", subsets: ["latin"] });
@@ -29,10 +30,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="apple-touch-icon" href="/icon-192.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
       </head>
-      <body className={`${geist.variable} font-sans bg-gray-50 text-gray-900 antialiased min-h-screen`}>
+      <body className={`${geist.variable} font-sans bg-gray-50 text-gray-900 antialiased min-h-screen pb-16 sm:pb-0`}>
         <Providers>
           <Navbar />
           {children}
+          <BottomNav />
         </Providers>
         <script dangerouslySetInnerHTML={{ __html: `
           if ('serviceWorker' in navigator) {

@@ -12,11 +12,14 @@ export default function Navbar() {
         <Link href="/" className="font-bold text-xl text-orange-600">
           RestoBooking
         </Link>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
           {session?.user ? (
             <>
-              <span className="text-sm text-gray-600">{session.user.name}</span>
-              <Link href="/dashboard" className="text-sm text-gray-500 hover:text-orange-600">
+              <span className="text-sm text-gray-600 hidden sm:inline">{session.user.name}</span>
+              <Link href="/my-bookings" className="text-sm text-gray-500 hover:text-orange-600">
+                Мои брони
+              </Link>
+              <Link href="/dashboard" className="text-sm text-gray-500 hover:text-orange-600 hidden sm:inline">
                 Dashboard
               </Link>
               <button
@@ -27,12 +30,17 @@ export default function Navbar() {
               </button>
             </>
           ) : (
-            <Link
-              href="/login"
-              className="bg-orange-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-orange-600 transition"
-            >
-              Войти
-            </Link>
+            <>
+              <Link href="/my-bookings" className="text-sm text-gray-500 hover:text-orange-600">
+                Мои брони
+              </Link>
+              <Link
+                href="/login"
+                className="bg-orange-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-orange-600 transition"
+              >
+                Войти
+              </Link>
+            </>
           )}
         </div>
       </div>

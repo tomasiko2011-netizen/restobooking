@@ -101,6 +101,35 @@ async function seed() {
     { name: "Da Vinci", slug: "da-vinci", cuisine: "Азиатская, Европейская", address: "пр. Назарбаева 21", lat: 49.805, lng: 73.09, phone: "+7 700 210 2100", city: "karaganda", price: 3, cap: 40, deposit: 5000 },
     { name: "Lumi", slug: "lumi", cuisine: "Кавказская, Казахская", address: "пр. Нуркена Абдирова 30в", lat: 49.805769, lng: 73.099643, phone: "+7 700 300 3000", city: "karaganda", price: 2, cap: 30, deposit: 3000 },
     { name: "Gurami", slug: "gurami", cuisine: "Грузинская, Халяль", address: "Arena Park, мкр. Байкена Ашимова 7/1", lat: 49.7926, lng: 73.137, phone: "+7 700 071 0710", city: "karaganda", price: 2, cap: 25, deposit: 2000 },
+
+    // АКТОБЕ
+    { name: "GAIA", slug: "gaia-aktobe", cuisine: "Европейская, Японская", address: "пр. Абилкайыр-хана 54", lat: 50.292905, lng: 57.158128, phone: "+7 707 911 5544", city: "aktobe", price: 2, cap: 30, deposit: 2000 },
+    { name: "Assado", slug: "assado-aktobe", cuisine: "Стейки, Бургеры", address: "пр. Тауелсиздик 9Б", lat: 50.278559, lng: 57.144102, phone: "+7 747 989 1010", city: "aktobe", price: 2, cap: 25, deposit: 2000 },
+    { name: "Koster", slug: "koster-aktobe", cuisine: "Стейки, Паста", address: "пр. Санкибай батыра 177в", lat: 50.279065, lng: 57.157010, phone: "+7 701 036 0300", city: "aktobe", price: 2, cap: 25, deposit: 2000 },
+    { name: "Manhattan", slug: "manhattan-aktobe", cuisine: "Европейская, Суши", address: "пр. Санкибай батыра 14а", lat: 50.291406, lng: 57.157851, phone: "+7 700 140 1400", city: "aktobe", price: 2, cap: 30, deposit: 2000 },
+
+    // ПАВЛОДАР
+    { name: "Bremen", slug: "bremen-pavlodar", cuisine: "Итальянская, Гриль", address: "ул. Академика Сатпаева 253/1", lat: 52.265085, lng: 76.943538, phone: "+7 705 324 8888", city: "pavlodar", price: 2, cap: 50, deposit: 2000 },
+    { name: "Chechil", slug: "chechil-pavlodar", cuisine: "Итальянская, Пицца", address: "ул. Усолка 1/3", lat: 52.250621, lng: 76.954758, phone: "+7 705 391 8080", city: "pavlodar", price: 2, cap: 30, deposit: 2000 },
+    { name: "Loka", slug: "loka-pavlodar", cuisine: "Авторская кухня", address: "ул. Ломова 150/4", lat: 52.265204, lng: 76.977025, phone: "+7 777 162 4785", city: "pavlodar", price: 2, cap: 25, deposit: 2000 },
+    { name: "Alpenhof", slug: "alpenhof-pavlodar", cuisine: "Немецкая, Пивоварня", address: "ул. Сураганова 19а", lat: 52.293330, lng: 76.972891, phone: "+7 776 903 9995", city: "pavlodar", price: 2, cap: 30, deposit: 2000 },
+
+    // СЕМЕЙ
+    { name: "Adis", slug: "adis-semey", cuisine: "Авторская, Европейская", address: "пр. Шоже Каржаубайулы 155", lat: 50.426439, lng: 80.267705, phone: "+7 707 200 8000", city: "semey", price: 3, cap: 30, deposit: 2000 },
+    { name: "Pinta Bar & Grill", slug: "pinta-semey", cuisine: "Европейская, Гриль", address: "ул. Чайжунусова 92", lat: 50.402718, lng: 80.256603, phone: "+7 708 467 0010", city: "semey", price: 2, cap: 40, deposit: 2000 },
+    { name: "Premium", slug: "premium-semey", cuisine: "Европейская, Восточная", address: "ул. Кабанбай батыра 65", lat: 50.422353, lng: 80.247332, phone: "+7 776 177 7171", city: "semey", price: 2, cap: 25, deposit: 2000 },
+    { name: "Mamuka", slug: "mamuka-semey", cuisine: "Грузинская", address: "ул. Ибраева 145а", lat: 50.408079, lng: 80.250544, phone: "+7 776 076 6949", city: "semey", price: 2, cap: 25, deposit: 2000 },
+
+    // АТЫРАУ
+    { name: "Meiman", slug: "meiman-atyrau", cuisine: "Восточная, Халяль", address: "ТД Plaza, ул. Абдрахманов 43", lat: 47.121358, lng: 51.938920, phone: "+7 771 241 4141", city: "atyrau", price: 2, cap: 30, deposit: 2000 },
+    { name: "NES", slug: "nes-atyrau", cuisine: "Халяль, Стейки", address: "ТРЦ Атырау, пр. Сатпаева 17а", lat: 47.105527, lng: 51.895748, phone: "+7 771 833 0107", city: "atyrau", price: 2, cap: 25, deposit: 2000 },
+    { name: "Хуторок", slug: "khutorok-atyrau", cuisine: "Украинская, Европейская", address: "пр. Азаттык 2а", lat: 47.111527, lng: 51.923538, phone: "+7 705 862 2261", city: "atyrau", price: 2, cap: 25, deposit: 2000 },
+    { name: "Mindal", slug: "mindal-atyrau", cuisine: "Восточная, Казахская", address: "мкр. Сарыарка 31а", lat: 47.106361, lng: 51.907688, phone: "+7 701 052 5005", city: "atyrau", price: 2, cap: 35, deposit: 2000 },
+
+    // КОСТАНАЙ
+    { name: "IZUMI", slug: "izumi-kostanay", cuisine: "Грузинская, Восточная", address: "ТРЦ Kostanay plaza, пр. Назарбаева 193", lat: 53.235808, lng: 63.613066, phone: "+7 776 134 7777", city: "kostanay", price: 2, cap: 25, deposit: 2000 },
+    { name: "Мясоед", slug: "myasoed-kostanay", cuisine: "Шашлык, Стейки", address: "ул. Баймагамбетова 30", lat: 53.198623, lng: 63.609084, phone: "+7 707 382 6770", city: "kostanay", price: 2, cap: 25, deposit: 2000 },
+    { name: "Kinza", slug: "kinza-kostanay", cuisine: "Грузинская, Хинкали", address: "ул. Байтурсынова 45а", lat: 53.212597, lng: 63.627239, phone: "+7 700 726 3498", city: "kostanay", price: 2, cap: 30, deposit: 2000 },
   ];
 
   const restaurantIds: string[] = [];

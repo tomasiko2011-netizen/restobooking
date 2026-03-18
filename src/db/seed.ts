@@ -130,6 +130,22 @@ async function seed() {
     { name: "IZUMI", slug: "izumi-kostanay", cuisine: "Грузинская, Восточная", address: "ТРЦ Kostanay plaza, пр. Назарбаева 193", lat: 53.235808, lng: 63.613066, phone: "+7 776 134 7777", city: "kostanay", price: 2, cap: 25, deposit: 2000 },
     { name: "Мясоед", slug: "myasoed-kostanay", cuisine: "Шашлык, Стейки", address: "ул. Баймагамбетова 30", lat: 53.198623, lng: 63.609084, phone: "+7 707 382 6770", city: "kostanay", price: 2, cap: 25, deposit: 2000 },
     { name: "Kinza", slug: "kinza-kostanay", cuisine: "Грузинская, Хинкали", address: "ул. Байтурсынова 45а", lat: 53.212597, lng: 63.627239, phone: "+7 700 726 3498", city: "kostanay", price: 2, cap: 30, deposit: 2000 },
+
+    // ТАРАЗ доп.
+    { name: "Altyn Saqa", slug: "altyn-saqa-taraz", cuisine: "Восточная, Европейская", address: "мкр. Самал 39а", lat: 42.882836, lng: 71.3388, phone: "+7 707 148 7375", city: "taraz", price: 2, cap: 100, deposit: 3000 },
+    { name: "Janymsoul", slug: "janymsoul-taraz", cuisine: "Восточная, Японская", address: "ул. Айтиева 36", lat: 42.893499, lng: 71.373283, phone: "+7 700 932 5675", city: "taraz", price: 3, cap: 50, deposit: 5000 },
+    { name: "Mansard", slug: "mansard-taraz", cuisine: "Европейская", address: "ул. Айтеке би 3Б", lat: 42.895483, lng: 71.374845, phone: "+7 747 700 4400", city: "taraz", price: 3, cap: 35, deposit: 5000 },
+
+    // ШЫМКЕНТ доп.
+    { name: "The Green Park", slug: "the-green-park", cuisine: "Европейская", address: "ул. Жанибекова 44", lat: 42.347561, lng: 69.627101, phone: "+7 778 009 7070", city: "shymkent", price: 3, cap: 120, deposit: 5000 },
+    { name: "Izakaya", slug: "izakaya-shymkent", cuisine: "Паназиатская", address: "пр. Тауке хана 196", lat: 42.311576, lng: 69.625294, phone: "+7 771 202 0004", city: "shymkent", price: 3, cap: 52, deposit: 5000 },
+    { name: "Saba", slug: "saba-shymkent", cuisine: "Казахская, Европейская", address: "ул. Казыбек Би 12", lat: 42.31162, lng: 69.601377, phone: "+7 775 360 0014", city: "shymkent", price: 2, cap: 120, deposit: 3000 },
+
+    // КАРАГАНДА доп.
+    { name: "Concert", slug: "concert-karaganda", cuisine: "Европейская, Азиатская", address: "пр. Нуркена Абдирова 17/2", lat: 49.803716, lng: 73.097685, phone: "+7 777 777 2454", city: "karaganda", price: 3, cap: 300, deposit: 5000 },
+    { name: "Old Money", slug: "old-money-karaganda", cuisine: "Европейская, Стейки", address: "ул. Таттимбета 10/8", lat: 49.795154, lng: 73.161057, phone: "+7 700 436 8080", city: "karaganda", price: 3, cap: 120, deposit: 5000 },
+    { name: "Между строк", slug: "mezhdu-strok", cuisine: "Авторская", address: "ул. Абая 36", lat: 49.819083, lng: 73.094044, phone: "+7 778 676 8608", city: "karaganda", price: 3, cap: 40, deposit: 5000 },
+    { name: "EtnoFarabi", slug: "etnofarabi-karaganda", cuisine: "Казахская, Восточная", address: "ул. Муканова 28/1", lat: 49.775174, lng: 73.149577, phone: "+7 771 273 0000", city: "karaganda", price: 2, cap: 240, deposit: 3000 },
   ];
 
   const restaurantIds: string[] = [];

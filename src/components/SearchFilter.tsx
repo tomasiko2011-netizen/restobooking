@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import { getPhotoUrl } from "@/lib/photos";
 
 interface Restaurant {
   id: string;
@@ -125,8 +126,13 @@ export default function SearchFilter({ restaurants, citySlug }: Props) {
             href={`/${citySlug}/restaurant/${r.slug}`}
             className="group bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all border border-gray-100 hover:border-orange-300 overflow-hidden"
           >
-            <div className="h-40 bg-gradient-to-br from-orange-100 to-red-50 flex items-center justify-center">
-              <span className="text-5xl">🍽️</span>
+            <div className="h-40 bg-gray-200 overflow-hidden">
+              <img
+                src={getPhotoUrl(r.cuisine, r.id)}
+                alt={r.name}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+              />
             </div>
             <div className="p-4">
               <div className="flex justify-between items-start mb-1">

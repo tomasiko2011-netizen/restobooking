@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCityBySlug, getRestaurantsByCity } from "@/lib/queries";
 import SearchFilter from "@/components/SearchFilter";
+import Map from "@/components/Map";
 
 export default async function CityPage({ params }: { params: Promise<{ city: string }> }) {
   const { city: citySlug } = await params;
@@ -25,7 +26,19 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
         {allRestaurants.length === 0 ? (
           <p className="text-center text-gray-500 py-20">Рестораны скоро появятся</p>
         ) : (
-          <SearchFilter restaurants={allRestaurants} citySlug={citySlug} />
+          <>
+            {/* Map */}
+            <div className="mb-6">
+              <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+              <Map
+                restaurants={allRestaurants}
+                citySlug={citySlug}
+                center={[city.lat, city.lng]}
+              />
+            </div>
+            {/* Search + List */}
+            <SearchFilter restaurants={allRestaurants} citySlug={citySlug} />
+          </>
         )}
       </main>
     </div>

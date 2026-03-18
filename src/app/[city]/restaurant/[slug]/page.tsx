@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { getCityBySlug, getRestaurantBySlug, getPricingRules, getDateOccupancy } from "@/lib/queries";
 import BookingForm from "@/components/BookingForm";
 import AvailabilityGrid from "@/components/AvailabilityGrid";
+import { getPhotoUrl } from "@/lib/photos";
+import Reviews from "@/components/Reviews";
 
 export default async function RestaurantPage({ params }: { params: Promise<{ city: string; slug: string }> }) {
   const { city: citySlug, slug } = await params;
@@ -46,8 +48,12 @@ export default async function RestaurantPage({ params }: { params: Promise<{ cit
           {/* Info — 3 cols */}
           <div className="lg:col-span-3 space-y-6">
             {/* Photo */}
-            <div className="h-64 bg-gradient-to-br from-orange-100 to-red-50 rounded-2xl flex items-center justify-center">
-              <span className="text-7xl">🍽️</span>
+            <div className="h-64 bg-gray-200 rounded-2xl overflow-hidden">
+              <img
+                src={getPhotoUrl(restaurant.cuisine, restaurant.id)}
+                alt={restaurant.name}
+                className="w-full h-full object-cover"
+              />
             </div>
 
             {/* Details */}
@@ -113,6 +119,12 @@ export default async function RestaurantPage({ params }: { params: Promise<{ cit
                 </div>
               </div>
             )}
+
+            {/* Reviews */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <h2 className="font-bold text-xl mb-4">Отзывы</h2>
+              <Reviews restaurantId={restaurant.id} />
+            </div>
           </div>
 
           {/* Booking Form — 2 cols */}

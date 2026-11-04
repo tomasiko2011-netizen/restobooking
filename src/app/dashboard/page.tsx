@@ -3,10 +3,14 @@ import Link from "next/link";
 import { db } from "@/db";
 import { reservations, restaurants } from "@/db/schema";
 import { eq, and, sql, count } from "drizzle-orm";
+import { requireRole } from "@/lib/access";
 
 export default async function DashboardPage() {
-  // TODO: get restaurant from auth session. For now show all.
-  const allRestaurants = await db.select().from(restaurants).orderBy(restaurants.name);
+  const user = await requireRole(["owner", "admin"]);
+  // admin видит все рестораны, owner — только свои
+  const allRestaurants = await db.select().from(restaurants)
+    .where(user.role === "admin" ? sql`1=1` : eq(restaurants.ownerId, user.id))
+    .orderBy(restaurants.name);
 
   const today = new Date().toISOString().split("T")[0];
 

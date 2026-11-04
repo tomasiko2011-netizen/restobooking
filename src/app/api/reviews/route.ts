@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const { restaurantId, rating, comment } = await req.json();
   if (!restaurantId || !rating) return NextResponse.json({ error: "restaurantId and rating required" }, { status: 400 });
-  if (rating < 1 || rating > 5) return NextResponse.json({ error: "rating must be 1-5" }, { status: 400 });
+  if (!Number.isInteger(rating) || rating < 1 || rating > 5) return NextResponse.json({ error: "rating must be an integer 1-5" }, { status: 400 });
 
   const id = uuid();
   await db.insert(reviews).values({

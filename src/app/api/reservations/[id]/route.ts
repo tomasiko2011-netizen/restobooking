@@ -5,6 +5,11 @@ import { notifyReservationUpdate } from "@/lib/pusher-server";
 import { db } from "@/db";
 import { reservations, restaurants } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { getCurrentUser, canManageRestaurant, verifyReservationToken } from "@/lib/access";
+
+function isAuthor(userId: string | null | undefined, reservationUserId: string): boolean {
+  return !!userId && reservationUserId !== "anonymous" && reservationUserId === userId;
+}
 
 // PATCH /api/reservations/[id] — update status (confirm, cancel, no_show)
 export async function PATCH(
@@ -12,7 +17,10 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const { status, role } = await req.json();
+  const body = await req.json().catch(() => ({}));
+  const status = body?.status;
+  // role из тела больше не используется: права определяются сессией и БД.
+  const token = body?.token ?? req.headers.get("x-reservation-token");
 
   // Validate status
   const validStatuses = ["confirmed", "cancelled", "no_show"];
@@ -27,12 +35,30 @@ export async function PATCH(
     return NextResponse.json({ error: "Бронь не найдена" }, { status: 404 });
   }
 
+  // Authorization
+  const user = await getCurrentUser();
+  const isManager = await canManageRestaurant(user, reservation.restaurantId);
+  if (status === "cancelled") {
+    const allowed = isManager
+      || isAuthor(user?.id, reservation.userId)
+      || verifyReservationToken(reservation.id, token);
+    if (!allowed) {
+      return NextResponse.json(
+        { error: user ? "Нет доступа" : "Требуется вход" },
+        { status: user ? 403 : 401 },
+      );
+    }
+  } else if (!isManager) {
+    // confirmed / no_show — только владелец ресторана или admin
+    return NextResponse.json(
+      { error: user ? "Только ресторан может менять этот статус" : "Требуется вход" },
+      { status: user ? 403 : 401 },
+    );
+  }
+
   // Business rules
   if (status === "confirmed" && reservation.status !== "pending") {
     return NextResponse.json({ error: "Можно подтвердить только pending бронь" }, { status: 400 });
-  }
-  if (status === "no_show" && role !== "owner" && role !== "admin") {
-    return NextResponse.json({ error: "Только ресторан может отметить неявку" }, { status: 403 });
   }
 
   // Update
@@ -72,7 +98,7 @@ export async function PATCH(
 
 // GET /api/reservations/[id] — get reservation details
 export async function GET(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
@@ -80,6 +106,16 @@ export async function GET(
     .where(eq(reservations.id, id)).limit(1);
 
   if (!reservation) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
+  const user = await getCurrentUser();
+  const token = req.headers.get("x-reservation-token") ?? req.nextUrl.searchParams.get("token");
+  const allowed = isAuthor(user?.id, reservation.userId)
+    || verifyReservationToken(reservation.id, token)
+    || await canManageRestaurant(user, reservation.restaurantId);
+  if (!allowed) {
+    // 404, чтобы не раскрывать существование брони
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 

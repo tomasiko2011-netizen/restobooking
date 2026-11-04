@@ -4,9 +4,24 @@ import { db } from "@/db";
 import { reservations, restaurants, cities } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
 import Link from "next/link";
+import { getCurrentUser } from "@/lib/access";
 
 export default async function MyBookingsPage() {
-  // TODO: get userId from session. For now show all.
+  // Раньше страница показывала все брони всех гостей (с телефонами ресторанов). Теперь — только свои.
+  const user = await getCurrentUser();
+  if (!user) {
+    return (
+      <div className="min-h-screen">
+        <div className="max-w-3xl mx-auto px-4 py-20 text-center">
+          <h1 className="text-2xl font-bold mb-4">Мои брони</h1>
+          <p className="text-gray-500 mb-6">Войдите, чтобы увидеть свои бронирования</p>
+          <Link href="/login?callbackUrl=/my-bookings" className="bg-orange-500 text-white px-6 py-3 rounded-xl hover:bg-orange-600 inline-block">
+            Войти
+          </Link>
+        </div>
+      </div>
+    );
+  }
   const bookings = await db.select({
     id: reservations.id,
     date: reservations.date,
@@ -27,6 +42,7 @@ export default async function MyBookingsPage() {
     .from(reservations)
     .leftJoin(restaurants, eq(reservations.restaurantId, restaurants.id))
     .leftJoin(cities, eq(reservations.cityId, cities.id))
+    .where(eq(reservations.userId, user.id))
     .orderBy(desc(reservations.createdAt))
     .limit(50);
 

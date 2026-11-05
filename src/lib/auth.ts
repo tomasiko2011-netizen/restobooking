@@ -14,8 +14,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         name: { label: "Имя", type: "text", placeholder: "Ваше имя" },
       },
       async authorize(credentials) {
-        const phone = credentials?.phone as string;
-        const name = credentials?.name as string;
+        const phone = typeof credentials?.phone === "string" ? credentials.phone : "";
+        const name = typeof credentials?.name === "string" ? credentials.name : "";
         if (!phone) return null;
 
         // Find or create user by phone
@@ -34,7 +34,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             .where(eq(users.id, id)).limit(1);
         }
 
-        return user ? { id: user.id, name: user.name, phone: user.phone, role: user.role } : null;
+        if (!user) return null;
+
+        // Вход по телефону без подтверждения (нет OTP) — любой, кто знает номер,
+        // может войти под этим аккаунтом. Поэтому привилегированные роли
+        // (owner/admin) через этот провайдер НЕ пускаем, пока не появится OTP.
+        // Новые пользователи создаются только с ролью "user" (см. выше).
+        if (user.role === "admin" || user.role === "owner") {
+          console.warn("[auth] phone login refused for privileged account", user.id);
+          return null;
+        }
+
+        return { id: user.id, name: user.name, phone: user.phone, role: "user" };
       },
     }),
   ],

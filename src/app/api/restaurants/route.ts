@@ -6,7 +6,12 @@ import { v4 as uuid } from "uuid";
 
 // POST /api/restaurants — register new restaurant
 export async function POST(req: NextRequest) {
-  const { name, cityId, cuisine, address, phone, priceRange, capacityPerSlot, depositAmount, openTime, closeTime, description } = await req.json();
+  const { name, cityId, cuisine, address, phone, priceRange, capacityPerSlot, depositAmount, openTime, closeTime, description, rating } = await req.json();
+
+  // rating при регистрации не сохраняется (берётся из отзывов), но если передан — только целое 1..5
+  if (rating !== undefined && rating !== null && (!Number.isInteger(rating) || rating < 1 || rating > 5)) {
+    return NextResponse.json({ error: "rating must be an integer 1-5" }, { status: 400 });
+  }
 
   if (!name || !cityId || !address || !phone) {
     return NextResponse.json({ error: "Все обязательные поля должны быть заполнены" }, { status: 400 });

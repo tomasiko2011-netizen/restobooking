@@ -17,7 +17,7 @@ export default function ReservationActions({ reservationId, showNoShow }: Props)
       const res = await fetch(`/api/reservations/${reservationId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status, role: "owner" }),
+        body: JSON.stringify({ status }),
       });
       const data = await res.json();
       if (res.ok) {

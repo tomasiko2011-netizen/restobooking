@@ -3,8 +3,11 @@ import { db } from "@/db";
 import { cities, restaurants, reservations } from "@/db/schema";
 import { count, eq, sql } from "drizzle-orm";
 import Link from "next/link";
+import { requireRole } from "@/lib/access";
 
 export default async function AdminPage() {
+  await requireRole(["admin"]);
+
   const allCities = await db.select({
     id: cities.id,
     name: cities.name,

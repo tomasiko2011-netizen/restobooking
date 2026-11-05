@@ -4,6 +4,7 @@ import { reservations, restaurants } from "@/db/schema";
 import { eq, and, sql, count } from "drizzle-orm";
 import { v4 as uuid } from "uuid";
 import { notifyNewReservation } from "@/lib/pusher-server";
+import { getCurrentUser, reservationToken } from "@/lib/access";
 
 export const dynamic = "force-dynamic";
 
@@ -41,11 +42,14 @@ export async function POST(req: NextRequest) {
 
   // Create reservation
   const id = uuid();
+  const currentUser = await getCurrentUser();
   const paymentRequired = restaurant.depositRequired ?? false;
 
   await db.insert(reservations).values({
     id,
-    userId: "anonymous",  // TODO: replace with auth user
+    // Автор брони — вошедший пользователь; гость остаётся "anonymous"
+    // и управляет бронью через cancelToken из ответа.
+    userId: currentUser?.id ?? "anonymous",
     restaurantId,
     cityId,
     date,
@@ -64,6 +68,9 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({
     ok: true,
     reservationId: id,
+    // Секрет для отмены/просмотра гостевой брони (PATCH/GET /api/reservations/[id],
+    // поле token или заголовок x-reservation-token). Показывается только один раз.
+    cancelToken: reservationToken(id),
     message: paymentRequired
       ? "Бронь создана. Требуется оплата депозита."
       : "Бронь создана. Ожидайте подтверждения от ресторана.",

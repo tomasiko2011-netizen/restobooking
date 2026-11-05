@@ -1,7 +1,8 @@
 export const dynamic = "force-dynamic";
 import { db } from "@/db";
 import { reservations, restaurants, users } from "@/db/schema";
-import { eq, desc, sql } from "drizzle-orm";
+import { eq, desc, sql, and } from "drizzle-orm";
+import { requireRole } from "@/lib/access";
 import ReservationActions from "@/components/ReservationActions";
 
 export default async function ReservationsPage({
@@ -9,7 +10,10 @@ export default async function ReservationsPage({
 }: {
   searchParams: Promise<{ restaurant?: string }>;
 }) {
+  const user = await requireRole(["owner", "admin"]);
   const { restaurant: restaurantId } = await searchParams;
+  // owner видит только брони своих ресторанов
+  const ownerFilter = user.role === "admin" ? sql`1=1` : eq(restaurants.ownerId, user.id);
 
   const allReservations = await db
     .select({
@@ -27,7 +31,10 @@ export default async function ReservationsPage({
     })
     .from(reservations)
     .leftJoin(restaurants, eq(reservations.restaurantId, restaurants.id))
-    .where(restaurantId ? eq(reservations.restaurantId, restaurantId) : sql`1=1`)
+    .where(and(
+      ownerFilter,
+      restaurantId ? eq(reservations.restaurantId, restaurantId) : sql`1=1`,
+    ))
     .orderBy(desc(reservations.createdAt))
     .limit(100);
 
